@@ -1,22 +1,30 @@
 name: Lint Test Build
 on: push
 jobs:
-  lint:
+  test: 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
-      
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      
       - name: Install dependencies
         run: npm ci
-
-      - name: lint-test-deploy
-        run: |
-          npm run lint
-          npm run test
-          npm run build
+      - name: Lint code
+        run: npm run Lint
+      - name: Test code
+        run: npm run test
+    
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Install dependencies
+        run: npm ci
+      - name: Build website
+        run: npm run build
+  
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
+        run: echo "Deploying..."
